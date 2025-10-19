@@ -3,6 +3,7 @@ import dotenv from 'dotenv'
 
 import {connectDB} from './config/db.js'
 import feedbackRouter from './routes/feedbackRoute.js';
+import userRouter from './routes/userRoute.js';
 
 dotenv.config();
 
@@ -19,6 +20,7 @@ server.get("/",(req,res)=>{
 })
 
 server.use("/api/user",feedbackRouter);
+server.use("/api/user",userRouter)
 
 server.listen(PORT,'0.0.0.0',()=>{
     console.log(`Server started on http://localhost:${PORT}`);
