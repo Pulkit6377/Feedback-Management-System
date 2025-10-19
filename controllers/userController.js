@@ -33,7 +33,7 @@ const registerUser = async(req,res) => {
     try {
         const userExist = await userModel.findOne({email})
         if(userExist){
-            res.json({success:false,message:"User already Exists"})
+           return res.json({success:false,message:"User already Exists"})
         }
 
         //validating email and strong password 
@@ -47,7 +47,7 @@ const registerUser = async(req,res) => {
 
         // hasing user password
         const salt = await bcrypt.genSalt(10);
-        const hashedPassword = await bcrypt.hash(salt,password);
+        const hashedPassword = await bcrypt.hash(password,salt);
 
         const newUser = new userModel({
             name:name,
@@ -57,11 +57,11 @@ const registerUser = async(req,res) => {
 
         const user = await newUser.save();
         const token  = createToken(user._id);
-        res.json({success:true,token})
+        return res.json({success:true,token})
     
-    } catch (error) {
+    } catch (error) {        
         console.log(error);
-        res.json({success:false,message:"Error"})
+        return res.json({success:false,message:"Error"})
     }
 }
 
