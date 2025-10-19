@@ -18,7 +18,7 @@ export const submitFeedback = async(req,res) =>{
 export const getAllFeedbacks = async(req,res) => {
     try {
         const feedbacks = await feedbackModel.find().populate("user","name email");
-        return res.json({success:true,feedback})
+        return res.json({success:true,feedbacks})
     } catch (error) {
         console.log(error);
         return res.json({success:false,message:"Error"})
