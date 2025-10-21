@@ -1,6 +1,6 @@
 import express from 'express'
 import dotenv from 'dotenv'
-
+import cors from 'cors'
 import {connectDB} from './config/db.js'
 import feedbackRouter from './routes/feedbackRoute.js';
 import userRouter from './routes/userRoute.js';
@@ -11,7 +11,13 @@ connectDB();
 
 const server = express();
 
+server.use(cors({
+    origin:"http://localhost:5174",
+    credentials:true
+}))
+
 server.use(express.json());
+
 
 const PORT = process.env.PORT || 5000 ;
 
