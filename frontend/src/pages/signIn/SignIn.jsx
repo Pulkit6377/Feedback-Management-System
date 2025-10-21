@@ -24,9 +24,8 @@ const signIn = () => {
       e.preventDefault();
       const response = await axios.post(url+"/api/user/login",data);
       if(response.data.success){
-      // setToken(response.data.token);
       navigate('/dashboard')
-      localStorage.setItem("token",response.data.token)
+      setToken(response.data.token);
      }
      else{
       alert(response.data.message);
