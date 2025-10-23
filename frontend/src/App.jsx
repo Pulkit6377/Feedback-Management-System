@@ -10,7 +10,18 @@ import UserDash from './pages/userDash/UserDash.jsx'
 
 const App = () => {
   const token = localStorage.getItem("token");
-  const user = token ? JSON.parse(localStorage.getItem("user")) : null ; // {name,role,email}
+  let user = null;
+  const userData = localStorage.getItem("user");
+
+if (userData && userData !== "undefined") {
+  try {
+    user = JSON.parse(userData);
+  } catch (err) {
+    console.error("Invalid user JSON:", err);
+    localStorage.removeItem("user"); // cleanup invalid value
+  }
+}
+
 
   return (
     <div className='app'>
@@ -19,18 +30,20 @@ const App = () => {
         <Route path = "/" element = {<Home/>} />
         <Route path='/signin' element = {<SignIn/>}/>
         <Route path='/signup' element = {<SignUp/>}/>
-        <Route 
-            path='/dashboard'
-             element = {
-               !token ? (
-                <Navigate to="/" />
-               ): user?.role ==="admin" ? (
-                <AdminDash />
-               ): (
-                <UserDash />
-               )
-             }
-          />
+        <Route
+          path="/dashboard"
+            element={
+                !token ? (
+                  <Navigate to="/" />
+                      ) : (
+                        <Navigate to={user?.role === "admin" ? "/admin" : "/user"} />
+                      )
+                  }
+            />
+
+<Route path="/admin" element={<AdminDash />} />
+<Route path="/user" element={<UserDash />} />
+
       </Routes>
     </div>
     

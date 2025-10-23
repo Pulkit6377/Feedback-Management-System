@@ -6,7 +6,17 @@ const Navbar = () => {
 
   const navigate = useNavigate();
   const token = localStorage.getItem("token")
-  const user = JSON.parse(localStorage.getItem("user"))
+  let user = null;
+  const userData = localStorage.getItem("user");
+
+  if (userData && userData !== "undefined") {
+  try {
+    user = JSON.parse(userData);
+  } catch (err) {
+    console.error("Invalid user JSON:", err);
+    localStorage.removeItem("user");
+  }
+}
 
   const handlelogout = () =>{
     localStorage.removeItem("token")
@@ -27,7 +37,7 @@ const Navbar = () => {
           </>
         ):(
         <>
-        <span>Hi, {user?.name} </span>
+        <span>Hi,</span>
         <button onClick={handlelogout} >LogOut</button>
         </>
         )}

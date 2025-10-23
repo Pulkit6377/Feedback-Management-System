@@ -1,12 +1,14 @@
-import React from 'react'
-import './FeedbackCard.css'
+// FeedbackCard.jsx
+import React from "react";
+import "./FeedbackCard.css"; // optional, for styling
 
-const FeedbackCard = () => {
+const FeedbackCard = ({ feedback }) => {
   return (
-    <div>
-      
+    <div className="feedback-card">
+      <p className="feedback-comment">{feedback.comment}</p>
+      <p className="feedback-rating">Rating: {feedback.rating}</p>
     </div>
-  )
-}
+  );
+};
 
-export default FeedbackCard
+export default FeedbackCard;

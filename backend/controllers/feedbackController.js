@@ -8,7 +8,7 @@ export const submitFeedback = async(req,res) =>{
             user:req.user._id,
             rating,
             comment})
-        return res.json({success:true,message:"Feedback Submitted successfully"})
+        return res.json({success:true,message:"Feedback Submitted successfully",Feedback})
     } catch (error) {
         console.log(error);
         return res.json({success:false,message:"Error"})

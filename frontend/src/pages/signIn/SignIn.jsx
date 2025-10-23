@@ -3,7 +3,7 @@ import './SignIn.css'
 import {useNavigate } from 'react-router-dom';
 import axios from 'axios'
 
-const signIn = () => {
+const SignIn = () => {
   const url = 'http://localhost:5000'
 
   const [data,setData] = useState({
@@ -24,8 +24,11 @@ const signIn = () => {
       e.preventDefault();
       const response = await axios.post(url+"/api/user/login",data);
       if(response.data.success){
-      navigate('/dashboard')
-      setToken(response.data.token);
+      localStorage.setItem("token", response.data.token);
+      localStorage.setItem("user", JSON.stringify(response.data.user));
+      
+      window.location.href = '/dashboard';
+
      }
      else{
       alert(response.data.message);
@@ -33,11 +36,11 @@ const signIn = () => {
   }
 
   return (
-    <div onSubmit={handleSubmit} className='signin'>
-      <form className="signin-container">
+    <div className='signin'>
+      <form onSubmit={handleSubmit} className="signin-container">
         <div className="signin-title">
         <h2>SignIn</h2>
-        <h2 className='pointer'>x</h2>
+        <h2 className='pointer' onClick={()=>navigate('/')}>x</h2>
         </div>
         <div className="signin-input">
           <input name='email' type="email" placeholder='Enter your mail' onChange={handleChange} value={data.email} required />
@@ -54,4 +57,4 @@ const signIn = () => {
   )
 }
 
-export default signIn
+export default SignIn

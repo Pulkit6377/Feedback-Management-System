@@ -3,7 +3,7 @@ import './SignUp.css'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
-const signUp = () => {
+const SignUp = () => {
 
   const url = 'http://localhost:5000'
 
@@ -26,8 +26,10 @@ const signUp = () => {
     e.preventDefault();
     const response = await axios.post(url+'/api/user/register',data)
     if(response.data.success){
-      localStorage.setItem("token",response.data.token)
-      navigate('/dashboard')
+      localStorage.setItem("token", response.data.token);
+      localStorage.setItem("user", JSON.stringify(response.data.user));
+      
+      window.location.href = '/dashboard';
     }
     else{
       alert(response.data.message)
@@ -39,7 +41,7 @@ const signUp = () => {
       <form onSubmit={handleSubmit} className='signup-container'>
         <div className="signup-title">
           <h2>SignUp</h2>
-          <h2 className='pointer'>x</h2>
+          <h2 className='pointer' onClick={()=>navigate('/')} >x</h2>
         </div>
         <div className="signup-input">
           <input type="name" name='name' value={data.name} onChange={handleChange} placeholder='Enter your name ' required/>
@@ -57,4 +59,4 @@ const signUp = () => {
   )
 }
 
-export default signUp
+export default SignUp
