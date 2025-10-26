@@ -1,3 +1,5 @@
+# Feedback-Management-System
+A full-stack Feedback Management System built using the MERN stack. The platform allows users to submit feedback and administrators to manage, analyze, and respond to feedback efficiently. Includes authentication, role-based access, and dynamic data visualization for better insights.
 
 # Feedback Management System
 
@@ -95,9 +97,6 @@ npm install
 npm start
 ```
 
-Runs frontend on http://localhost:5174
-
-
 ## API Endpoints
 
 ### Auth
@@ -126,14 +125,14 @@ MongoDB_URL = mongodb+srv://<your_id>:<your_password>@fda.1gl2bnw.mongodb.net/Fe
 JWT_SECRET = your_secret_key
 ADMIN_KEY = your_secret_key
 
-Usage
+## Usage
 
-Register as a new user or login as admin.
+Register as a new user / admin or login as user/admin.
 
 Submit feedback using the form on the dashboard.
 
 Edit or update feedback by clicking Edit.
 
-Admin can view, edit, or delete any feedback.
+Admin can view or delete any feedback.
 
 
