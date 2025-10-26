@@ -95,6 +95,9 @@ npm install
 npm start
 ```
 
+Runs frontend on http://localhost:5174
+
+
 ## API Endpoints
 
 ### Auth
