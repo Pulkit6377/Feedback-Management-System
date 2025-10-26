@@ -9,18 +9,18 @@ const loginUser = async(req,res) =>{
     try{
         const user = await User.findOne({email});
         if(!user){
-            res.json({success:false,message:"User Not registered"})
+          return res.json({success:false,message:"User Not registered"})
         }
         const isMatch = await bcrypt.compare(password,user.password)
         if(!isMatch){
-            res.json({success:false,message:"Please enter valid login credentials"})
+           return res.json({success:false,message:"Please enter valid login credentials"})
         }
         const token = createToken(user);
-        res.json({success:true,token})
+        return res.json({success:true,token,user:{role:user.role,name:user.name,email:user.email,_id:user._id}})
     }
     catch(error){
         console.log(error);
-        res.json({success:false,message:"Error"})
+       return res.json({success:false,message:"Error"})
     }
 }
 
@@ -29,7 +29,7 @@ const createToken = (user) => {
 }
 
 const registerUser = async(req,res) => {
-    const {name,email,password} = req.body;
+    const {name,email,password,role,adminKey} = req.body;
     try {
         const userExist = await User.findOne({email})
         if(userExist){
@@ -49,15 +49,33 @@ const registerUser = async(req,res) => {
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password,salt);
 
+        let finalRole = 'user';
+        if(role === 'admin'){
+            if(adminKey&&adminKey === process.env.ADMIN_KEY){
+                finalRole = 'admin'
+            }
+            else{
+                return res.json({success:false,message:"Invalid Admin Key"})
+            }
+        }
+
         const newUser = new User({
             name:name,
             email:email,
-            password:hashedPassword
+            password:hashedPassword,
+            role:finalRole
         })
 
         const user = await newUser.save();
         const token  = createToken(user);
-        return res.json({success:true,token})
+        return res.json({success:true,token,
+            user: {
+            _id: user._id,
+            role: user.role,
+             name: user.name,
+            email: user.email,
+            }
+})
     
     } catch (error) {        
         console.log(error);

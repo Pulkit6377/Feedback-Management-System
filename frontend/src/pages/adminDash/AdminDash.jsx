@@ -8,8 +8,6 @@ const AdminDash = () => {
   const getAllFeedbacks = async () => {
     try {
       const token = localStorage.getItem("token");
-      const user = localStorage.getItem("user")
-      console.log(user);
       
       const res = await axios.get("http://localhost:5000/api/user/feedback", {
         headers: { token:token },
@@ -23,14 +21,14 @@ const AdminDash = () => {
   };
 
   // Delete feedback
-  const handleDelete = async (id) => {
+  const handleDelete = async (_id) => {
     try {
       const token = localStorage.getItem("token");
-      const res = await axios.delete(`http://localhost:5000/api/admin/feedback/${id}`, {
+      const res = await axios.delete(`http://localhost:5000/api/user/feedback/${_id}`, {
         headers: { token:token },
       });
       if (res.data.success) {
-        setFeedbacks((prev) => prev.filter((fb) => fb._id !== id));
+        setFeedbacks((prev) => prev.filter((fb) => fb._id !== _id));
       }
     } catch (err) {
       console.log(err);

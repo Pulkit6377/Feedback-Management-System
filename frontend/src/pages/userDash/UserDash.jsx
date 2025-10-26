@@ -30,6 +30,16 @@ const handleFeedbackAdded = (newFeedback) => {
 };
 
 
+  // update submitted feedback
+  const handleFeedbackUpdated = (id, newComment, newRating) => {
+  setFeedbacks((prev) =>
+    prev.map((fb) =>
+      fb._id === id ? { ...fb, comment: newComment, rating: newRating } : fb
+    )
+  );
+};
+
+
   useEffect(() => {
     getMyFeedbacks();
   }, []);
@@ -47,16 +57,19 @@ const handleFeedbackAdded = (newFeedback) => {
       <div className="feedback-list">
         {feedbacks && feedbacks.length > 0 ? (
         feedbacks.map((fb) => (
-        <FeedbackCard key={fb?._id} feedback={fb}  />
-                ))
-            ) : (
-           <p className="no-feedback">No feedbacks yet</p>
+        <FeedbackCard key={fb?._id} feedback={fb} onUpdated={handleFeedbackUpdated}
+        />
+        ))
+        ) : (
+      <p className="no-feedback">No feedbacks yet</p>
 )}
 
       </div>
     </div>
   );
-};
+}
+
+
 
 export default UserDash;
 

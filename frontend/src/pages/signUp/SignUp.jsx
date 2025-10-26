@@ -10,9 +10,11 @@ const SignUp = () => {
   const [data,setData] = useState({
     name:"",
     email:"",
-    password:""
+    password:"",
+    role:"user",
+    adminKey:""
   })
-
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleChange = (e) =>{
@@ -24,15 +26,32 @@ const SignUp = () => {
 
   const handleSubmit = async(e) =>{
     e.preventDefault();
-    const response = await axios.post(url+'/api/user/register',data)
+    setLoading(true)
+    try{
+      const response = await axios.post(url+'/api/user/register',data)
     if(response.data.success){
       localStorage.setItem("token", response.data.token);
-      localStorage.setItem("user", JSON.stringify(response.data.user));
+      localStorage.setItem("user", JSON.stringify(response.data.user))
       
-      window.location.href = '/dashboard';
+        setTimeout(() => {
+          if (user.role === "admin") {
+            navigate("/admin");
+          } else {
+            navigate("/user");
+          }
+        }, 50);
     }
     else{
       alert(response.data.message)
+    }
+
+    }
+    catch(error){
+      console.log(error);
+      alert("Something went wrong!!")
+    }
+    finally{
+      setLoading(false)
     }
   }
 
@@ -47,8 +66,16 @@ const SignUp = () => {
           <input type="name" name='name' value={data.name} onChange={handleChange} placeholder='Enter your name ' required/>
           <input type="email" name='email' value={data.email} onChange={handleChange} placeholder='Enter your mail' required/>
           <input type="password" name='password' value={data.password} onChange={handleChange} placeholder='Enter password' required/>
+          <select name='role' value={data.role} onChange={handleChange}>
+            <option value="user">User</option>
+            <option value="admin">Admin</option>
+          </select>
+          {data.role ==='admin' && (
+            <input
+            type='password' name='adminKey' placeholder='Enetr Admin Key' value={data.adminKey} onChange={handleChange} required />
+          )}
         </div>
-        <button type='submit'>Sign Up</button>
+        <button type='submit' disabled={loading}>{loading ? "Signing Up..." : "Sign Up"}</button>
         <div className="signup-condition">
           <input type="checkbox" required />
           <p>By continuing, i agree to terms of use & privacy policy</p>
