@@ -32,6 +32,8 @@ const SignUp = () => {
     if(response.data.success){
       localStorage.setItem("token", response.data.token);
       localStorage.setItem("user", JSON.stringify(response.data.user))
+
+      const user = response.data.user;
       
         setTimeout(() => {
           if (user.role === "admin") {
