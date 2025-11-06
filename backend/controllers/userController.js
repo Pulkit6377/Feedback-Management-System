@@ -33,7 +33,7 @@ const registerUser = async(req,res) => {
     try {
         const userExist = await User.findOne({email})
         if(userExist){
-           return res.json({success:false,message:"User already Exists"})
+           return res.json({success:false,message:"User already Exists . Please SignIn"})
         }
 
         //validating email and strong password 
