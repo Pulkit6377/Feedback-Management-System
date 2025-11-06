@@ -12,7 +12,7 @@ connectDB();
 const server = express();
 
 server.use(cors({
-    origin:"http://localhost:5174",
+    origin:"https://feedback-system-red-gamma.vercel.app",
     credentials:true
 }))
 
