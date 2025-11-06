@@ -19,7 +19,7 @@ const FeedbackCard = ({ feedback ,onUpdated }) => {
 
     try {
       const response = await axios.put(
-        `http://localhost:5000/api/user/myfeedback/${feedback._id}`, // adjust URL
+        `https://feedback-management-system-4f6t.onrender.com/api/user/myfeedback/${feedback._id}`, // adjust URL
         { comment,rating },
         {
           headers: {token:token},

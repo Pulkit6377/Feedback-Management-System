@@ -9,7 +9,7 @@ const AdminDash = () => {
     try {
       const token = localStorage.getItem("token");
       
-      const res = await axios.get("http://localhost:5000/api/user/feedback", {
+      const res = await axios.get("https://feedback-management-system-4f6t.onrender.com/api/user/feedback", {
         headers: { token:token },
       });
       if (res.data.success) {
@@ -24,7 +24,7 @@ const AdminDash = () => {
   const handleDelete = async (_id) => {
     try {
       const token = localStorage.getItem("token");
-      const res = await axios.delete(`http://localhost:5000/api/user/feedback/${_id}`, {
+      const res = await axios.delete(`https://feedback-management-system-4f6t.onrender.com/api/user/feedback/${_id}`, {
         headers: { token:token },
       });
       if (res.data.success) {

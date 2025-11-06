@@ -16,7 +16,7 @@ const AddFeedback = ({ onFeedbackAdded }) => {
     try {
       const token = localStorage.getItem("token");
       const res = await axios.post(
-        "http://localhost:5000/api/user/feedback",{ comment, rating },{ headers: {token: token,}});
+        "https://feedback-management-system-4f6t.onrender.com/api/user/feedback",{ comment, rating },{ headers: {token: token,}});
 
       console.log(token);
       

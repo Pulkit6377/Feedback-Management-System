@@ -5,7 +5,7 @@ import axios from 'axios'
 
 const SignUp = () => {
 
-  const url = 'http://localhost:5000'
+  const url = 'https://feedback-management-system-4f6t.onrender.com'
 
   const [data,setData] = useState({
     name:"",
